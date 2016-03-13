@@ -50,7 +50,7 @@ public class MainSupport {
                 || _password.isEmpty()
                 || _firstName.isEmpty()
                 || _lastName.isEmpty()
-                || _gender.isEmpty())
+                || _gender == null)
             result = false;
         else
             result = true;

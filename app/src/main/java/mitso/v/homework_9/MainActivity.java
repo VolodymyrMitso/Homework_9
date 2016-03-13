@@ -1,5 +1,7 @@
 package mitso.v.homework_9;
 
+/** В ActionBar не було ніякого функціоналу, я зробив взагалі без нього */
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;

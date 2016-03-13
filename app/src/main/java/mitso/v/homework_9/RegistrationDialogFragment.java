@@ -21,10 +21,9 @@ public class RegistrationDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.s_dp_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
+                        dialog.dismiss();
                     }
                 })
-                .setCancelable(false)
                 .create();
     }
 }
