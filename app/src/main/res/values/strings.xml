@@ -1,0 +1,19 @@
+<resources>
+
+    <string name="s_appName">Homework_9</string>
+
+    <string name="s_greeting_SF">Hello</string>
+    <string name="s_loginHint_SF">Login</string>
+    <string name="s_passwordHint_SF">Password</string>
+    <string name="s_registration_SF">Register</string>
+    <string name="s_signIn_SF">login</string>
+
+    <string name="s_loginHint_RF">Login</string>
+    <string name="s_passwordHint_RF">Password</string>
+    <string name="s_firstNameHint_RF">First name</string>
+    <string name="s_lastNameHint_RF">Last name</string>
+    <string name="s_female_RF">Female</string>
+    <string name="s_male_RF">Male</string>
+    <string name="s_register_RF">Register</string>
+
+</resources>
