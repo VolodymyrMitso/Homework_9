@@ -15,12 +15,10 @@ public class RegistrationFragment extends Fragment {
     private EditText mEditText_Password;
     private EditText mEditText_FirstName;
     private EditText mEditText_LastName;
-    private RadioGroup mRadioGroup_Gender;
-    private Button mButton_Register;
 
     private EventHandler mEventHandler;
 
-    private String gender = "";
+    private String gender;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,22 +29,22 @@ public class RegistrationFragment extends Fragment {
         mEditText_FirstName = (EditText) view.findViewById(R.id.et_FirstName_RF);
         mEditText_LastName = (EditText) view.findViewById(R.id.et_LastName_RF);
 
-        mRadioGroup_Gender = (RadioGroup) view.findViewById(R.id.rg_Gender_RF);
+        RadioGroup mRadioGroup_Gender = (RadioGroup) view.findViewById(R.id.rg_Gender_RF);
         mRadioGroup_Gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_Female_RF:
-                        gender = "FEMALE";
+                        gender = getResources().getString(R.string.s_personGender_female);
                         break;
                     case R.id.rb_Male_RF:
-                        gender = "MALE";
+                        gender = getResources().getString(R.string.s_personGender_male);
                         break;
                 }
             }
         });
 
-        mButton_Register = (Button) view.findViewById(R.id.btn_Register_RF);
+        Button mButton_Register = (Button) view.findViewById(R.id.btn_Register_RF);
         mButton_Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

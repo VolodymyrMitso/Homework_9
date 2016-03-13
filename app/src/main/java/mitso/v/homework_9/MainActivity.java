@@ -4,13 +4,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity implements EventHandler {
 
-    public ArrayList<Person> persons = new ArrayList<>();
+    private ArrayList<Person> persons = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,16 +18,8 @@ public class MainActivity extends FragmentActivity implements EventHandler {
         if (savedInstanceState == null) {
             commitSignInFragment();
             commitHeadlessFragment();
-//            if (savedInstanceState.getParcelableArrayList("key") != null)
-//                persons = savedInstanceState.getParcelableArrayList("key");
         }
     }
-
-//    @Override
-//    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-//        super.onSaveInstanceState(outState, outPersistentState);
-//        outState.putParcelableArrayList("key", persons);
-//    }
 
     private void commitSignInFragment() {
         SignInFragment signInFragment = new SignInFragment();
@@ -54,31 +45,7 @@ public class MainActivity extends FragmentActivity implements EventHandler {
 
     @Override
     public void signIn(String _login, String _password, AlertDialog _alertDialog) {
-        if (!persons.isEmpty()) {
-            for (int i = 0; i < persons.size(); i++) {
-                if (persons.get(i).getLogin().equals(_login) && persons.get(i).getPassword().equals(_password)) {
-                    _alertDialog.setTitle("LOGIN SUCCESS");
-                    _alertDialog.setMessage("WELCOME " + persons.get(i).getLogin());
-                    _alertDialog.show();
-                    break;
-                } else {
-                    _alertDialog.setTitle("LOGIN FAILURE");
-                    _alertDialog.setMessage("USER " + _login + " DOESN'T EXIST OR PASSWORD IS WRONG");
-                    _alertDialog.show();
-                }
-            }
-        } else {
-            if (_login.isEmpty()) {
-                _alertDialog.setTitle("LOGIN FAILURE");
-                _alertDialog.setMessage("USER DOESN'T EXIST");
-            } else {
-                _alertDialog.setTitle("LOGIN FAILURE");
-                _alertDialog.setMessage("USER " + _login + " DOESN'T EXIST OR PASSWORD IS WRONG");
-            }
-            _alertDialog.show();
-        }
-
-        Toast.makeText(MainActivity.this, String.valueOf(persons.size()), Toast.LENGTH_SHORT).show();
+        MainSupport.signInSupport(this, persons, _login, _password, _alertDialog);
     }
 
     @Override
@@ -98,16 +65,40 @@ public class MainActivity extends FragmentActivity implements EventHandler {
     }
 
     @Override
+    public void registerPerson(String _login, String _password, String _firstName, String _lastName, String _gender) {
+        RegistrationDialogFragment dialog = new RegistrationDialogFragment();
+        Bundle args = new Bundle();
+
+        if (MainSupport.personDataCheck(this, _login, _password, _firstName, _lastName, _gender)) {
+            Person person = new Person();
+            person.setLogin(_login);
+            person.setPassword(_password);
+            person.setFirstName(_firstName);
+            person.setLastName(_lastName);
+            person.setGender(_gender);
+
+            persons.add(person);
+            getDataFragment().setPersons(persons);
+
+            args.putString(Constants.KEY_DIALOG_MESSAGE,
+                            getResources().getString(R.string.s_dm_user_n) +
+                            person.getFirstName() + " " + person.getLastName() +
+                            getResources().getString(R.string.s_dm_n_registered));
+
+        } else
+            args.putString(Constants.KEY_DIALOG_MESSAGE,
+                    getResources().getString(R.string.s_dm_emptyFields));
+
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), Constants.DIALOG_FRAGMENT_TAG);
+    }
+
+    @Override
     protected void onResume() {
-        ArrayList<Person> zzz = getDataFragment().getPersons();
-//        if (zzz != null)
-//            Toast.makeText(MainActivity.this, String.valueOf("resume before zzz - " + zzz.size()), Toast.LENGTH_SHORT).show();
-//        else
-//            Toast.makeText(MainActivity.this, "resume before zzz - null", Toast.LENGTH_SHORT).show();
-        if (zzz != null)
-            persons = zzz;
-//        Toast.makeText(MainActivity.this, String.valueOf("resume after - " + persons.size()), Toast.LENGTH_SHORT).show();
         super.onResume();
+        if (getDataFragment().getPersons() != null)
+            persons = getDataFragment().getPersons();
+
         if (getSupportFragmentManager().findFragmentById(R.id.fl_Container_AM) instanceof SignInFragment) {
             SignInFragment signInFragment =
                     (SignInFragment) getSupportFragmentManager().findFragmentById(R.id.fl_Container_AM);
@@ -121,10 +112,9 @@ public class MainActivity extends FragmentActivity implements EventHandler {
 
     @Override
     protected void onPause() {
-//        Toast.makeText(MainActivity.this, String.valueOf("pause before " + persons.size()), Toast.LENGTH_SHORT).show();
-        getDataFragment().setPersons(persons);
-//        Toast.makeText(MainActivity.this, String.valueOf("pause after zzz" + getDataFragment().getPersons().size()), Toast.LENGTH_SHORT).show();
         super.onPause();
+        getDataFragment().setPersons(persons);
+
         if (getSupportFragmentManager().findFragmentById(R.id.fl_Container_AM) instanceof SignInFragment) {
             SignInFragment signInFragment =
                     (SignInFragment) getSupportFragmentManager().findFragmentById(R.id.fl_Container_AM);
@@ -134,21 +124,6 @@ public class MainActivity extends FragmentActivity implements EventHandler {
                     (RegistrationFragment) getSupportFragmentManager().findFragmentById(R.id.fl_Container_AM);
             registrationFragment.releaseEventHandler();
         }
-    }
-
-    @Override
-    public void registerPerson(String _login, String _password, String _firstName, String _lastName, String _gender) {
-        Person person = new Person();
-        person.setLogin(_login);
-        person.setPassword(_password);
-        person.setFirstName(_firstName);
-        person.setLastName(_lastName);
-        person.setGender(_gender);
-        persons.add(person);
-        Toast.makeText(MainActivity.this, person.toString(), Toast.LENGTH_SHORT).show();
-        getDataFragment().setPersons(persons);
-
-        Toast.makeText(MainActivity.this, String.valueOf(persons.size()), Toast.LENGTH_SHORT).show();
     }
 
     @Override

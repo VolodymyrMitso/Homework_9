@@ -4,51 +4,39 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="40dp">
+    android:layout_margin="@dimen/d_size_40dp">
 
     <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/stl_textInputLayout">
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLength="15"
+            style="@style/stl_editText"
 
             android:id="@+id/et_Login_RF"
             android:hint="@string/s_loginHint_RF"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/stl_textInputLayout">
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLength="15"
+            style="@style/stl_editText"
 
             android:id="@+id/et_Password_RF"
             android:hint="@string/s_passwordHint_RF"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/stl_textInputLayout">
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLength="15"
+            style="@style/stl_editText"
 
             android:id="@+id/et_FirstName_RF"
             android:hint="@string/s_firstNameHint_RF"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/stl_textInputLayout">
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLength="15"
+            style="@style/stl_editText"
 
             android:id="@+id/et_LastName_RF"
             android:hint="@string/s_lastNameHint_RF"/>
@@ -62,7 +50,7 @@
         android:orientation="horizontal"
         android:gravity="center"
 
-        android:layout_marginTop="50dp" >
+        android:layout_marginTop="@dimen/d_size_50dp" >
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -84,9 +72,9 @@
         android:id="@+id/btn_Register_RF"
 
         android:text="@string/s_register_RF"
-        android:textSize="17sp"
+        android:textSize="@dimen/d_textSize_17sp"
         android:gravity="center"
 
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="@dimen/d_size_50dp"/>
 
 </LinearLayout>

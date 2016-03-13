@@ -7,4 +7,7 @@ public final class Constants {
     public static final String HEADLESS_FRAGMENT_TAG = "HEADLESS_FRAGMENT_TAG";
 
     public static final String KEY_PERSON_LIST = "KEY_PERSON_LIST";
+
+    public static final String DIALOG_FRAGMENT_TAG = "DIALOG_FRAGENT_TAG";
+    public static final String KEY_DIALOG_MESSAGE = "KEY_DIALOG_MESSAGE";
 }

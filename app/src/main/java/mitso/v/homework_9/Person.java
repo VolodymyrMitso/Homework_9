@@ -88,15 +88,4 @@ public class Person implements Parcelable {
             return new Person[size];
         }
     };
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", gender='" + gender + '\'' +
-                '}';
-    }
 }

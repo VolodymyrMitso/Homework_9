@@ -16,4 +16,28 @@
     <string name="s_male_RF">Male</string>
     <string name="s_register_RF">Register</string>
 
+    <string name="s_personGender_male">MALE</string>
+    <string name="s_personGender_female">FEMALE</string>
+
+    <string name="s_greeting">Hello</string>
+    <string name="s_greetingMr">"Hello Mr. "</string>
+    <string name="s_greetingMrs">"Hello Mrs. "</string>
+
+    <string name="s_dt_failure">Login failure</string>
+    <string name="s_dt_success">Login success</string>
+
+    <string name="s_dp_ok">OK</string>
+
+    <string name="s_dm_welcomeMr">"Welcome Mr. "</string>
+    <string name="s_dm_welcomeMrs">"Welcome Mrs. "</string>
+
+    <string name="s_dm_userNotExist">User doesn\'t exist or password is wrong</string>
+    <string name="s_dm_user">"User "</string>
+    <string name="s_dm_notExist">" doesn\'t exist or password is wrong"</string>
+
+    <string name="s_dm_user_n">"User \n"</string>
+    <string name="s_dm_n_registered">"\n registered"</string>
+
+    <string name="s_dm_emptyFields">Please fill all fields and choose gender</string>
+
 </resources>

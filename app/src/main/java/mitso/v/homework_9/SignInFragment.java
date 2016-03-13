@@ -18,8 +18,6 @@ public class SignInFragment extends Fragment {
     private TextView mTextView_Greeting;
     private EditText mEditText_Login;
     private EditText mEditText_Password;
-    private TextView mTextView_Registration;
-    private Button mButton_SignIn;
 
     private EventHandler mEventHandler;
 
@@ -31,7 +29,7 @@ public class SignInFragment extends Fragment {
         mEditText_Login = (EditText) view.findViewById(R.id.et_Login_SF);
         mEditText_Password = (EditText) view.findViewById(R.id.et_Password_FF);
 
-        mTextView_Registration = (TextView) view.findViewById(R.id.tv_Registration_SF);
+        TextView mTextView_Registration = (TextView) view.findViewById(R.id.tv_Registration_SF);
         mTextView_Registration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,7 +37,7 @@ public class SignInFragment extends Fragment {
             }
         });
 
-        mButton_SignIn = (Button) view.findViewById(R.id.btn_SignIn_SF);
+        Button mButton_SignIn = (Button) view.findViewById(R.id.btn_SignIn_SF);
         mButton_SignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,36 +52,41 @@ public class SignInFragment extends Fragment {
     }
 
     private AlertDialog getAlertDialog() {
-        AlertDialog alertDialog = new AlertDialog
+        return new AlertDialog
                 .Builder(getActivity())
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.s_dp_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ArrayList<Person> persons = ((MainActivity) getActivity()).getDataFragment().getPersons();
-                        if (persons != null) {
-                            if (!persons.isEmpty()) {
-                                for (int i = 0; i < persons.size(); i++) {
-                                    Person person = persons.get(i);
-                                    if (mEditText_Login.getText().toString().equals(person.getLogin()) && mEditText_Password.getText().toString().equals(person.getPassword())) {
-                                        String greeting;
-                                        if (person.getGender().equals("FEMALE"))
-                                            greeting = "Hello MRS. " + person.getFirstName() + " " + person.getLastName();
-                                        else
-                                            greeting = "Hello MR. " + person.getFirstName() + " " + person.getLastName();
-                                        mTextView_Greeting.setText(greeting);
-                                        break;
-                                    } else {
-                                        mTextView_Greeting.setText("Hello");
-                                    }
-                                }
-                            }
-                        }
+                        setGreeting();
                         dialog.cancel();
                     }
                 })
                 .setCancelable(false)
                 .create();
-        return alertDialog;
+    }
+
+    private void setGreeting() {
+        ArrayList<Person> persons = ((MainActivity) getActivity()).getDataFragment().getPersons();
+        if (persons != null) {
+            if (!persons.isEmpty()) {
+                for (int i = 0; i < persons.size(); i++) {
+                    Person person = persons.get(i);
+                    if (mEditText_Login.getText().toString().equals(person.getLogin()) && mEditText_Password.getText().toString().equals(person.getPassword())) {
+                        String greeting;
+                        if (person.getGender().equals(getResources().getString(R.string.s_personGender_female)))
+                            greeting = getResources().getString(R.string.s_greetingMrs)
+                                    + person.getFirstName() + " " + person.getLastName();
+                        else
+                            greeting = getResources().getString(R.string.s_greetingMr)
+                                    + person.getFirstName() + " " + person.getLastName();
+                        mTextView_Greeting.setText(greeting);
+                        break;
+                    } else {
+                        mTextView_Greeting.setText(getResources().getString(R.string.s_greeting));
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -95,10 +98,12 @@ public class SignInFragment extends Fragment {
 
                 Person person = persons.get(persons.size() - 1);
                 String greeting;
-                if (person.getGender().equals("FEMALE"))
-                    greeting = "Hello MRS. " + person.getFirstName() + " " + person.getLastName();
+                if (person.getGender().equals(getResources().getString(R.string.s_personGender_female)))
+                    greeting = getResources().getString(R.string.s_greetingMrs)
+                            + person.getFirstName() + " " + person.getLastName();
                 else
-                    greeting = "Hello MR. " + person.getFirstName() + " " + person.getLastName();
+                    greeting = getResources().getString(R.string.s_greetingMr)
+                            + person.getFirstName() + " " + person.getLastName();
                 mTextView_Greeting.setText(greeting);
                 mEditText_Login.setText(person.getLogin());
                 mEditText_Password.setText(person.getPassword());
