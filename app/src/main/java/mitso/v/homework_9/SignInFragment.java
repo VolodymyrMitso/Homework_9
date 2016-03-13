@@ -58,7 +58,7 @@ public class SignInFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         setGreeting();
-                        dialog.cancel();
+                        dialog.dismiss();
                     }
                 })
                 .setCancelable(false)

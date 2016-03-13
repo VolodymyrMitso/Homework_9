@@ -16,7 +16,7 @@ public class MainSupport {
                         showAlertDialog(_alertDialog,
                                 context.getResources().getString(R.string.s_dt_success),
                                 context.getResources().getString(R.string.s_dm_welcomeMrs) +
-                                        person.getFirstName() + " " + person.getFirstName());
+                                        person.getFirstName() + " " + person.getLastName());
                     else
                         showAlertDialog(_alertDialog,
                                 context.getResources().getString(R.string.s_dt_success),
@@ -50,7 +50,7 @@ public class MainSupport {
                 || _password.isEmpty()
                 || _firstName.isEmpty()
                 || _lastName.isEmpty()
-                || _gender.isEmpty())
+                || _gender == null)
             result = false;
         else
             result = true;
