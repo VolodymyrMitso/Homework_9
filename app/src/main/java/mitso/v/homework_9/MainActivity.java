@@ -3,9 +3,14 @@ package mitso.v.homework_9;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends FragmentActivity implements EventHandler {
+
+    private static ArrayList<Person> persons = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,49 @@ public class MainActivity extends FragmentActivity implements EventHandler {
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
         signInFragment.setEventHandler(this);
+    }
+
+    private void commitHeadlessFragment() {
+        DataHeadlessFragment dataHeadlessFragment = new DataHeadlessFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(dataHeadlessFragment, Constants.HEADLESS_FRAGMENT_TAG)
+                .commit();
+    }
+
+    public DataHeadlessFragment getDataFragment () {
+        return (DataHeadlessFragment) getSupportFragmentManager().findFragmentByTag(Constants.HEADLESS_FRAGMENT_TAG);
+    }
+
+    @Override
+    public void signIn(String _login, String _password, AlertDialog _alertDialog) {
+        if (!persons.isEmpty()) {
+            for (int i = 0; i < persons.size(); i++) {
+                if (persons.get(i).getLogin().equals(_login) && persons.get(i).getPassword().equals(_password)) {
+                    _alertDialog.setTitle("LOGIN SUCCESS");
+                    _alertDialog.setMessage("WELCOME " + persons.get(i).getLogin());
+                    _alertDialog.show();
+                } else {
+                    _alertDialog.setTitle("LOGIN FAILURE");
+                    _alertDialog.setMessage("USER " + _login + " DOESN'T EXIST OR PASSWORD IS WRONG");
+                    _alertDialog.show();
+                }
+            }
+        } else {
+            if (_login.isEmpty()) {
+                _alertDialog.setTitle("LOGIN FAILURE");
+                _alertDialog.setMessage("USER DOESN'T EXIST");
+            } else {
+                _alertDialog.setTitle("LOGIN FAILURE");
+                _alertDialog.setMessage("USER " + _login + " DOESN'T EXIST OR PASSWORD IS WRONG");
+            }
+            _alertDialog.show();
+        }
+    }
+
+    @Override
+    public void openRegistrationFragment() {
+        commitRegistrationFragment();
     }
 
     private void commitRegistrationFragment() {
@@ -65,31 +113,15 @@ public class MainActivity extends FragmentActivity implements EventHandler {
         }
     }
 
-    private void commitHeadlessFragment() {
-        DataHeadlessFragment dataHeadlessFragment = new DataHeadlessFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(dataHeadlessFragment, "headless")
-                .commit();
-    }
-
-    public DataHeadlessFragment getDataFragment () {
-        return (DataHeadlessFragment) getSupportFragmentManager().findFragmentByTag("headless");
-    }
-
     @Override
-    public void openRegistrationFragment() {
-        commitRegistrationFragment();
-    }
-
-    @Override
-    public void registerPerson(String login, String password, String firstName, String lastName, String gender) {
+    public void registerPerson(String _login, String _password, String _firstName, String _lastName, String _gender) {
         Person person = new Person();
-        person.setLogin(login);
-        person.setPassword(password);
-        person.setFirstName(firstName);
-        person.setLastName(lastName);
-        person.setGender(gender);
+        person.setLogin(_login);
+        person.setPassword(_password);
+        person.setFirstName(_firstName);
+        person.setLastName(_lastName);
+        person.setGender(_gender);
+        persons.add(person);
         Toast.makeText(MainActivity.this, person.toString(), Toast.LENGTH_SHORT).show();
         getDataFragment().setPerson(person);
     }

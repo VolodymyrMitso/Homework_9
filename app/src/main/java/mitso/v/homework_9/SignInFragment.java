@@ -1,15 +1,15 @@
 package mitso.v.homework_9;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 public class SignInFragment extends Fragment {
 
@@ -24,12 +24,12 @@ public class SignInFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.sign_in_fragment, container, false);
+
         mTextView_Greeting = (TextView) view.findViewById(R.id.tv_Greeting_SF);
         mEditText_Login = (EditText) view.findViewById(R.id.et_Login_SF);
         mEditText_Password = (EditText) view.findViewById(R.id.et_Password_FF);
-        mTextView_Registration = (TextView) view.findViewById(R.id.tv_Registration_SF);
-        mButton_SignIn = (Button) view.findViewById(R.id.btn_SignIn_SF);
 
+        mTextView_Registration = (TextView) view.findViewById(R.id.tv_Registration_SF);
         mTextView_Registration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,7 +37,32 @@ public class SignInFragment extends Fragment {
             }
         });
 
+        mButton_SignIn = (Button) view.findViewById(R.id.btn_SignIn_SF);
+        mButton_SignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mEventHandler.signIn(
+                        mEditText_Login.getText().toString(),
+                        mEditText_Password.getText().toString(),
+                        getAlertDialog());
+            }
+        });
+
         return view;
+    }
+
+    private AlertDialog getAlertDialog() {
+        AlertDialog alertDialog = new AlertDialog
+                .Builder(getActivity())
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setCancelable(false)
+                .create();
+        return alertDialog;
     }
 
     @Override
