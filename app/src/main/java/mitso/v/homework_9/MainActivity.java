@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity implements EventHandler {
 
-    private static ArrayList<Person> persons = new ArrayList<>();
+    public static ArrayList<Person> persons = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,7 @@ public class MainActivity extends FragmentActivity implements EventHandler {
                     _alertDialog.setTitle("LOGIN SUCCESS");
                     _alertDialog.setMessage("WELCOME " + persons.get(i).getLogin());
                     _alertDialog.show();
+                    break;
                 } else {
                     _alertDialog.setTitle("LOGIN FAILURE");
                     _alertDialog.setMessage("USER " + _login + " DOESN'T EXIST OR PASSWORD IS WRONG");
@@ -67,6 +68,8 @@ public class MainActivity extends FragmentActivity implements EventHandler {
             }
             _alertDialog.show();
         }
+
+        Toast.makeText(MainActivity.this, String.valueOf(persons.size()), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -124,6 +127,8 @@ public class MainActivity extends FragmentActivity implements EventHandler {
         persons.add(person);
         Toast.makeText(MainActivity.this, person.toString(), Toast.LENGTH_SHORT).show();
         getDataFragment().setPerson(person);
+
+        Toast.makeText(MainActivity.this, String.valueOf(persons.size()), Toast.LENGTH_SHORT).show();
     }
 
     @Override

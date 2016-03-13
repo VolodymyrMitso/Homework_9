@@ -57,6 +57,18 @@ public class SignInFragment extends Fragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        for (int i = 0; i < MainActivity.persons.size(); i++) {
+                            Person person =  MainActivity.persons.get(i);
+                            if (mEditText_Login.getText().toString().equals(person.getLogin()) && mEditText_Password.getText().toString().equals(person.getPassword())) {
+                                String greeting;
+                                if (person.getGender().equals("FEMALE"))
+                                    greeting = "Hello MRS. " + person.getFirstName() + " " + person.getLastName();
+                                else
+                                    greeting = "Hello MR. " + person.getFirstName() + " " + person.getLastName();
+                                mTextView_Greeting.setText(greeting);
+                                break;
+                            }
+                        }
                         dialog.cancel();
                     }
                 })
@@ -68,18 +80,16 @@ public class SignInFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (((MainActivity) getActivity()).getDataFragment() != null) {
-            Person person = ((MainActivity) getActivity()).getDataFragment().getPerson();
-            if (person != null) {
-                String greeting;
-                if (person.getGender().equals("FEMALE"))
-                    greeting = "Hello MRS. " + person.getFirstName() + " " + person.getLastName();
-                else
-                    greeting = "Hello MR. " + person.getFirstName() + " " + person.getLastName();
-                mTextView_Greeting.setText(greeting);
-                mEditText_Login.setText(person.getLogin());
-                mEditText_Password.setText(person.getPassword());
-            }
+        Person person = ((MainActivity) getActivity()).getDataFragment().getPerson();
+        if (person != null) {
+            String greeting;
+            if (person.getGender().equals("FEMALE"))
+                greeting = "Hello MRS. " + person.getFirstName() + " " + person.getLastName();
+            else
+                greeting = "Hello MR. " + person.getFirstName() + " " + person.getLastName();
+            mTextView_Greeting.setText(greeting);
+            mEditText_Login.setText(person.getLogin());
+            mEditText_Password.setText(person.getPassword());
         }
     }
 
