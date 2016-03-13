@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 public class DataHeadlessFragment extends Fragment {
 
-    private Person person;
+    private ArrayList<Person> persons;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -21,19 +23,19 @@ public class DataHeadlessFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(Constants.KEY_PERSON, person);
+        outState.putParcelableArrayList(Constants.KEY_PERSON_LIST, persons);
     }
 
     private void restoreState(Bundle savedInstanceState) {
-        person = (Person) savedInstanceState.getSerializable(Constants.KEY_PERSON);
+        persons = savedInstanceState.getParcelableArrayList(Constants.KEY_PERSON_LIST);
     }
 
 
-    public Person getPerson() {
-        return person;
+    public ArrayList<Person> getPersons() {
+        return persons;
     }
 
-    public void setPerson(Person _person) {
-        person = _person;
+    public void setPersons(ArrayList<Person> _persons) {
+        persons = _persons;
     }
 }

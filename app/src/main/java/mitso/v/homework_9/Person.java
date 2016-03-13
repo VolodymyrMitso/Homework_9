@@ -1,14 +1,18 @@
 package mitso.v.homework_9;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Person implements Serializable {
+public class Person implements Parcelable {
 
     private String login;
     private String password;
     private String firstName;
     private String lastName;
     private String gender;
+
+    public Person() {
+    }
 
     public String getLogin() {
         return login;
@@ -49,6 +53,41 @@ public class Person implements Serializable {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    private Person (Parcel in) {
+        setLogin(in.readString());
+        setPassword(in.readString());
+        setFirstName(in.readString());
+        setLastName(in.readString());
+        setGender(in.readString());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(getLogin());
+        dest.writeString(getPassword());
+        dest.writeString(getFirstName());
+        dest.writeString(getLastName());
+        dest.writeString(getGender());
+    }
+
+    public static final Parcelable.Creator<Person> CREATOR = new Parcelable.Creator<Person>() {
+
+        @Override
+        public Person createFromParcel(Parcel source) {
+            return new Person (source);
+        }
+
+        @Override
+        public Person[] newArray(int size) {
+            return new Person[size];
+        }
+    };
 
     @Override
     public String toString() {

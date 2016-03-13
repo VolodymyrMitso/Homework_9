@@ -10,16 +10,25 @@ import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity implements EventHandler {
 
-    public static ArrayList<Person> persons = new ArrayList<>();
+    public ArrayList<Person> persons = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        if (savedInstanceState == null)
+        if (savedInstanceState == null) {
             commitSignInFragment();
             commitHeadlessFragment();
+//            if (savedInstanceState.getParcelableArrayList("key") != null)
+//                persons = savedInstanceState.getParcelableArrayList("key");
+        }
     }
+
+//    @Override
+//    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+//        super.onSaveInstanceState(outState, outPersistentState);
+//        outState.putParcelableArrayList("key", persons);
+//    }
 
     private void commitSignInFragment() {
         SignInFragment signInFragment = new SignInFragment();
@@ -90,6 +99,14 @@ public class MainActivity extends FragmentActivity implements EventHandler {
 
     @Override
     protected void onResume() {
+        ArrayList<Person> zzz = getDataFragment().getPersons();
+//        if (zzz != null)
+//            Toast.makeText(MainActivity.this, String.valueOf("resume before zzz - " + zzz.size()), Toast.LENGTH_SHORT).show();
+//        else
+//            Toast.makeText(MainActivity.this, "resume before zzz - null", Toast.LENGTH_SHORT).show();
+        if (zzz != null)
+            persons = zzz;
+//        Toast.makeText(MainActivity.this, String.valueOf("resume after - " + persons.size()), Toast.LENGTH_SHORT).show();
         super.onResume();
         if (getSupportFragmentManager().findFragmentById(R.id.fl_Container_AM) instanceof SignInFragment) {
             SignInFragment signInFragment =
@@ -104,6 +121,9 @@ public class MainActivity extends FragmentActivity implements EventHandler {
 
     @Override
     protected void onPause() {
+//        Toast.makeText(MainActivity.this, String.valueOf("pause before " + persons.size()), Toast.LENGTH_SHORT).show();
+        getDataFragment().setPersons(persons);
+//        Toast.makeText(MainActivity.this, String.valueOf("pause after zzz" + getDataFragment().getPersons().size()), Toast.LENGTH_SHORT).show();
         super.onPause();
         if (getSupportFragmentManager().findFragmentById(R.id.fl_Container_AM) instanceof SignInFragment) {
             SignInFragment signInFragment =
@@ -126,7 +146,7 @@ public class MainActivity extends FragmentActivity implements EventHandler {
         person.setGender(_gender);
         persons.add(person);
         Toast.makeText(MainActivity.this, person.toString(), Toast.LENGTH_SHORT).show();
-        getDataFragment().setPerson(person);
+        getDataFragment().setPersons(persons);
 
         Toast.makeText(MainActivity.this, String.valueOf(persons.size()), Toast.LENGTH_SHORT).show();
     }
